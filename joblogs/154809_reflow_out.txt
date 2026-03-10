@@ -1,0 +1,1 @@
+Downloading https://nvlabs-fi-cdn.nvidia.com/edm2/posthoc-reconstructions/edm2-img64-xs-0134217-0.110.pkl ... done

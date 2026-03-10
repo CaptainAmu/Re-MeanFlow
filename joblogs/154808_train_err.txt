@@ -1,0 +1,40 @@
+[[34m2026-03-08 15:47:29[0m] Experiment directory created at R/64/remeanflow64
+[[34m2026-03-08 15:47:39[0m] EDM Parameters: 280,356,837
+/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[[34m2026-03-08 15:47:40[0m] Dataset contains 5,200,000 images
+[[34m2026-03-08 15:47:41[0m] Training for 100000 iterations...
+[[34m2026-03-08 15:47:49[0m] Beginning epoch 0...
+  0%|          | 0/40625 [00:00<?, ?it/s]  0%|          | 0/40625 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 446, in <module>
+    main(args)
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 305, in main
+    for x, n, y in tqdm(loader, total=len(loader)):
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/accelerate/data_loader.py", line 452, in __iter__
+    current_batch = next(dataloader_iter)
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 630, in __next__
+    data = self._next_data()
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1345, in _next_data
+    return self._process_data(data)
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1371, in _process_data
+    data.reraise()
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/_utils.py", line 694, in reraise
+    raise exception
+FileNotFoundError: Caught FileNotFoundError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/_utils/fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/torch/utils/data/_utils/fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 41, in __getitem__
+    image = torch.from_numpy(np.load(image_path))
+  File "/slurm-storage/shucli/.conda/envs/remeanflow/lib/python3.9/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: 'dataset/64/reflow/samples/4819218.npy'
+
+srun: error: gauss: task 0: Exited with exit code 1

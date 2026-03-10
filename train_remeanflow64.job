@@ -1,0 +1,55 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH --job-name=remeanflow64
+#SBATCH --output=joblogs/%j_train_out.txt
+#SBATCH --error=joblogs/%j_train_err.txt
+#SBATCH --time=48:00:00
+#SBATCH --mem=48000
+#SBATCH --gres=gpu:1
+#SBATCH --qos=long
+#SBATCH --partition=normal
+
+# Re-MeanFlow student distillation (ImageNet 64x64)
+# Prerequisites: reflow.py must have completed to generate dataset/64/reflow/samples/*.npy
+# Prerequisites: init_time_emb.py must have completed (emb_t/r checkpoints in R/64/time_emb_64/checkpoints/)
+# Note: tools/fid_stats/imagenet64_stats.npz is required for FID eval. If missing, you may need to
+#       compute it from ImageNet 64x64 or modify train.py to skip FID.
+
+export PYTHONNOUSERSITE=1
+
+PROJECT_ROOT=/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow
+cd "$PROJECT_ROOT"
+mkdir -p joblogs
+
+# Explicit Python from conda env (matches TiltMeanFlow pattern; ensures correct venv)
+PYTHON=/slurm-storage/shucli/.conda/envs/remeanflow/bin/python
+
+# Use srun with explicit PYTHON so process runs in GPU-allocated context with correct venv
+srun -u "$PYTHON" -u train.py \
+    --model edm2-img64-s-autog-fid \
+    --exp_name remeanflow64 \
+    --exp_group REMF_64 \
+    --results_dir R/64 \
+    --t_emb_ckpt R/64/time_emb_64/checkpoints/emb_t_0010000.pt \
+    --r_emb_ckpt R/64/time_emb_64/checkpoints/emb_r_0010000.pt \
+    --json_path dataset/64/reflow/dataset.json \
+    --fid_stats_path tools/fid_stats/imagenet64_stats.npz \
+    --t_r_schedule re2_truncate \
+    --p_std 1.0 \
+    --p_mean -0.8 \
+    --jvp_api autograd \
+    --p 0.5 \
+    --pc 1e-2 \
+    --w_pi 2.5 \
+    --iterations 100000 \
+    --stage1_iterations 50000 \
+    --ckpt_every 1000 \
+    --eval_every 1000 \
+    --plot_every 500 \
+    --log_every 100 \
+    --global_batch_size 128 \
+    --lr 2e-4 \
+    --ema_rate 0.9999 \
+    --distance_clip 0.87
+
+echo "Done. Check joblogs/ for output."

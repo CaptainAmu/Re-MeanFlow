@@ -1,0 +1,8 @@
+[CUDA diag] torch.cuda.is_available()=False, torch.__version__=2.1.0, torch.version.cuda=None, CUDA_VISIBLE_DEVICES=0
+Traceback (most recent call last):
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 455, in <module>
+    main(args)
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 105, in main
+    assert torch.cuda.is_available(), "Training currently requires at least one GPU."
+AssertionError: Training currently requires at least one GPU.
+srun: error: gauss: task 0: Exited with exit code 1

@@ -1,4 +1,4 @@
-<h1 align="center"> Straighter and Faster: <br> Efficient One-Step Generative Modeling 
+a<h1 align="center"> Straighter and Faster: <br> Efficient One-Step Generative Modeling 
 via Meanflow on Rectified Trajectories
 </h1>
 

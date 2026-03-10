@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/slurm-storage/shucli/PROJECT_FOLDER/Re-MeanFlow/train.py", line 15, in <module>
+    import wandb
+ModuleNotFoundError: No module named 'wandb'
+srun: error: gauss: task 0: Exited with exit code 1
